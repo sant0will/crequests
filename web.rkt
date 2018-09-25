@@ -1,9 +1,71 @@
-#lang web-server/insta
-(define (start request)
-(response/xexpr
-'(html
-(head (title "My Blog"))
-(body (h1 "Under construction"))
-)
-)
+#lang racket/gui
+
+(define main (new frame% [label "Crequests"] [width 400] [height 200]))
+(define create_perguntas (new frame% [label "Crequests - Perguntas"] [width 700] [height 500]))
+(define create_questionarios (new frame% [label "Crequests - Questionários"] [width 700] [height 500]))
+(define solve_questionarios (new frame% [label "Crequests - Resolver"] [width 700] [height 500]))
+
+ 
+(new button% [parent main]
+             [label "Criar Perguntas"]
+             [callback (lambda (button event)
+                         (send create_perguntas show #t))])
+
+(new button% [parent main]
+             [label "Criar Questionários"]
+             [callback (lambda (button event)
+                         (send create_questionarios show #t))])
+
+(new button% [parent main]
+             [label "Reponder Questionários"]
+             [callback (lambda (button event)
+                         (send solve_questionarios show #t))])
+ 
+(send main show #t)
+
+(define header (new message%
+                     (parent create_perguntas)
+                     (label "Criação de novas perguntas")))
+
+(define pergunta (new text-field%
+                        (label "Pergunta: ")
+                        (parent create_perguntas)))
+
+(define body (new message%
+                     (parent create_perguntas)
+                     (label "Respostas")))
+
+(define resposta_01 (new text-field%
+                        (label "Resposta 01: ")
+                        (parent create_perguntas)))
+
+(define resposta_02 (new text-field%
+                        (label "Resposta 02: ")
+                        (parent create_perguntas)))
+
+(define resposta_03 (new text-field%
+                        (label "Resposta 03: ")
+                        (parent create_perguntas)))
+
+(define resposta_04 (new text-field%
+                        (label "Resposta 04: ")
+                        (parent create_perguntas)))
+
+(define resposta_05 (new text-field%
+                        (label "Resposta 05: ")
+                        (parent create_perguntas)))
+
+(define resposta_correta (new radio-box%
+                       (label "Resposta Correta:")
+                       (parent create_perguntas)
+                       (choices (list "Resposta 01"
+                                      "Resposta 02"
+                                      "Resposta 03"
+                                      "Resposta 04"
+                                      "Resposta 05"))))
+
+(new button% [parent create_perguntas]
+             [label "Enviar"]
+             ;[callback (lambda (button event)
+ ;                        (send solve_questionarios show #t))])
 )
