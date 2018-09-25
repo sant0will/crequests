@@ -1,11 +1,5 @@
 #lang racket/gui
-(require db)
-(define sl3c
-  (sqlite3-connect
-   #:database "/home/willian/Documentos/Personal/crequests/racket_db.db"
-   )
-  )
-;(query-rows sl3c "select * from questionarios"); 
+
 (define main (new frame% [label "Crequests"] [width 400] [height 200]))
 (define create_perguntas (new frame% [label "Crequests - Perguntas"] [width 700] [height 500]))
 (define create_questionarios (new frame% [label "Crequests - Questionários"] [width 700] [height 500]))
@@ -72,6 +66,6 @@
 
 (new button% [parent create_perguntas]
              [label "Enviar"]
-             [callback (lambda (button event)
-                         (print(send resposta_05 get-value)))])
-
+             ;[callback (lambda (button event)
+ ;                        (send solve_questionarios show #t))])
+)
