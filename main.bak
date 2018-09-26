@@ -2,7 +2,7 @@
 (require db)
 (define sl3c
   (sqlite3-connect
-   #:database "D:/Projetos/crequests/dados/racket_db.db"
+   #:database "/home/willian/Documentos/Personal/crequests/racket_db.db"
    )
   )
 ;(query-rows sl3c "select * from questionarios"); 
@@ -11,8 +11,7 @@
 (define create_questionarios (new frame% [label "Crequests - Questionários"] [width 700] [height 500]))
 (define solve_questionarios (new frame% [label "Crequests - Resolver"] [width 700] [height 500]))
 
-
-
+ 
 (new button% [parent main]
              [label "Criar Perguntas"]
              [callback (lambda (button event)
@@ -74,6 +73,5 @@
 (new button% [parent create_perguntas]
              [label "Enviar"]
              [callback (lambda (button event)
-                        (query-exec sl3c "INSERT INTO perguntas VALUES (null, $pergunta)" (send pergunta get-value))
-                         )])
+                         (print(send resposta_05 get-value)))])
 
