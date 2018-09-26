@@ -1,17 +1,24 @@
 #lang racket/gui
+
 (require db)
-(define sl3c
+(define conn
   (sqlite3-connect
    #:database "D:/Projetos/crequests/dados/racket_db.db"
    )
   )
-;(query-rows sl3c "select * from questionarios"); 
+;(query-rows sl3c "select * from questionarios");
+
 (define main (new frame% [label "Crequests"] [width 400] [height 200]))
 (define create_perguntas (new frame% [label "Crequests - Perguntas"] [width 700] [height 500]))
 (define create_questionarios (new frame% [label "Crequests - Questionários"] [width 700] [height 500]))
 (define solve_questionarios (new frame% [label "Crequests - Resolver"] [width 700] [height 500]))
 
-
+(define save_pergunta 
+  (lambda (tf_pergunta)
+     (define result_save_pergunta (query conn "INSERT INTO perguntas VALUES (null, $pergunta)" tf_pergunta))
+     (print (first (result_save_pergunta)))
+     (printf "\nPergunta Cadastrada!\n")
+    ))    
 
 (new button% [parent main]
              [label "Criar Perguntas"]
@@ -74,6 +81,6 @@
 (new button% [parent create_perguntas]
              [label "Enviar"]
              [callback (lambda (button event)
-                        (query-exec sl3c "INSERT INTO perguntas VALUES (null, $pergunta)" (send pergunta get-value))
+                       (save_pergunta (send pergunta get-value))
                          )])
 
