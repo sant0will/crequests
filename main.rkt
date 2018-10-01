@@ -4,7 +4,7 @@
 (require db)
 (define conn
   (sqlite3-connect
-   #:database "D:/Projetos/crequests/dados/racket_db.db"
+   #:database "/home/willian/Documentos/Personal/crequests/dados/racket_db.db"
    )
   )
 ;(query-rows conn "select * from questionarios");
@@ -36,18 +36,67 @@
 (define create_questionario 
   (lambda (select)
     (define count 0)
-     (define perguntas (query-rows conn "SELECT questao FROM perguntas;"))
-     (for/list ([pergunta perguntas])
-       (define name_checkbox
-         (string-append "checkbox-" (number->string count)))
-         (print (dict-ref pergunta 0))
-         (define check-box (new check-box%
-                       (parent create_questionarios)
-                       (label (dict-ref pergunta 0))
-                       (value #f)))
-         (define count (+ count 1))
-         (print count)
-     )
+    (define perguntas (query-list conn "SELECT questao FROM perguntas;"))
+    (print perguntas)
+
+    (define header (new message%
+                     (parent create_questionarios)
+                     (label "Criação de novo questionário")))
+
+    (define nome (new text-field%
+                        (label "Nome:  ")
+                        (parent create_questionarios)))
+
+    (define pergunta01 (new choice%
+        (label "Pergunta 01")
+        (parent create_questionarios)
+        (choices perguntas)))
+
+    (define pergunta02 (new choice%
+        (label "Pergunta 02")
+        (parent create_questionarios)
+        (choices perguntas)))
+
+    (define pergunta03 (new choice%
+        (label "Pergunta 03")
+        (parent create_questionarios)
+        (choices perguntas)))
+
+    (define pergunta04 (new choice%
+        (label "Pergunta 04")
+        (parent create_questionarios)
+        (choices perguntas)))
+
+    (define pergunta05 (new choice%
+        (label "Pergunta 05")
+        (parent create_questionarios)
+        (choices perguntas)))
+
+    (define pergunta06 (new choice%
+        (label "Pergunta 06")
+        (parent create_questionarios)
+        (choices perguntas)))
+
+ (define pergunta07 (new choice%
+        (label "Pergunta 07")
+        (parent create_questionarios)
+        (choices perguntas)))
+
+    (define pergunta08 (new choice%
+        (label "Pergunta 08")
+        (parent create_questionarios)
+        (choices perguntas)))
+
+    (define pergunta09 (new choice%
+        (label "Pergunta 09")
+        (parent create_questionarios)
+        (choices perguntas)))
+
+    (define pergunta10 (new choice%
+        (label "Pergunta 10")
+        (parent create_questionarios)
+        (choices perguntas)))
+    
     (new button% [parent create_questionarios]
              [label "Criar "]
              [callback (lambda (button event)
