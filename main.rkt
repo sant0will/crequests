@@ -1,10 +1,10 @@
 #lang racket/gui
 
-(require racket/struct)
+(require racket/string)
 (require db)
 (define conn
   (sqlite3-connect
-   #:database "/home/willian/Documentos/Personal/crequests/dados/racket_db.db"
+   #:database "D:/Projetos/crequests/dados/racket_db.db"
    )
   )
 ;(query-rows conn "select * from questionarios");
@@ -14,6 +14,7 @@
 (define create_perguntas (new frame% [label "Crequests - Perguntas"] [width 700] [height 500] [x 500] [y 180]))
 (define create_questionarios (new frame% [label "Crequests - Questionários"] [width 700] [height 500] [x 500] [y 180]))
 (define solve_questionarios (new frame% [label "Crequests - Resolver"] [width 700] [height 500] [x 500] [y 180]))
+(define select "select")
 
 ;Função que salva a pergunta e as respostas
 (define save_pergunta 
@@ -24,7 +25,33 @@
      (printf "\nPergunta Cadastrada!\n")
      (send create_perguntas show #f)
      (send alert show #t)
-    )) 
+    ))
+
+;Função que salva os questinarios
+(define save_questionario 
+  (lambda (count)
+    (print count)))
+
+;Função que mostra 
+(define create_questionario 
+  (lambda (select)
+    (define count 0)
+     (define perguntas (query-rows conn "SELECT questao FROM perguntas;"))
+     (for/list ([pergunta perguntas])
+       (define name_checkbox
+         (string-append "checkbox-" (number->string count)))
+         (print (dict-ref pergunta 0))
+         (define check-box (new check-box%
+                       (parent create_questionarios)
+                       (label (dict-ref pergunta 0))
+                       (value #f)))
+         (define count (+ count 1))
+         (print count)
+     )
+    (new button% [parent create_questionarios]
+             [label "Criar "]
+             [callback (lambda (button event)
+                         (save_questionario count))])))
 
 ;Design do Alert
 (define header_alert (new message%
@@ -51,7 +78,8 @@
              [min-height 50]
              [vert-margin 10]
              [callback (lambda (button event)
-                         (send create_questionarios show #t))])
+                         (send create_questionarios show #t)
+                         (create_questionario select))])
 
 (new button% [parent main]
              [label "Reponder Questionários"]
@@ -111,3 +139,4 @@
                        (save_pergunta (list (send pergunta get-value) (send resposta_01 get-value) (send resposta_02 get-value) (send resposta_03 get-value)
                                        (send resposta_04 get-value) (send resposta_05 get-value) (send resposta_correta get-selection))))])
 
+;Design da tela de criação de questionarios
